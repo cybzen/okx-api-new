@@ -86,9 +86,12 @@ export default abstract class BaseRestClient {
 
     //  Note: `x-simulated-trading: 1` needs to be added to the header of the Demo Trading request.
     if (market === 'demo') {
+      // @ts-ignore
       this.globalRequestOptions.headers['x-simulated-trading'] = 1;
     }
+    // @ts-ignore
     this.globalRequestOptions.headers['Content-Type'] = 'application/json';
+    // @ts-ignore
     this.globalRequestOptions.headers['Accept'] = 'application/json';
 
     this.apiKey = credentials?.apiKey;
@@ -160,9 +163,13 @@ export default abstract class BaseRestClient {
     );
 
     if (!isPublicApi) {
+      // @ts-ignore
       options.headers['OK-ACCESS-KEY'] = this.apiKey;
+      // @ts-ignore
       options.headers['OK-ACCESS-SIGN'] = signResult.sign;
+      // @ts-ignore
       options.headers['OK-ACCESS-TIMESTAMP'] = tsISO;
+      // @ts-ignore
       options.headers['OK-ACCESS-PASSPHRASE'] = this.apiPassphrase;
     }
 
