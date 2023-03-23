@@ -1,6 +1,6 @@
 # Node.js & Typescript OKX (OKEX) API SDK
 
-[1]: https://www.npmjs.com/package/okx-api
+[1]: https://www.npmjs.com/package/okx-api-new
 
 
 Node.js连接器，用于OKX APIs和WebSockets：
@@ -38,7 +38,93 @@ npm install okx-api-new
 - [申请API key](https://www.okx.com/account/my-api)
 
 
+**基本使用实例**
+1. 根据需求在[OKX API Documentation](https://www.okx.com/docs-v5/en/#rest-api)找到对应的接口 -> A
+2. 在代码中引入之后，点击'okx-api-new' 进入包，找到rest-client.js 文件，搜索 A ,复制函数名，
+3. 在代码中使用
 
+
+```js
+
+// 实例一
+import { RestClient, OrderRequest } from 'okx-api-new';
+const API_KEY = "生成的key"
+const API_SECRET = "生成的密钥"
+const API_PASS = "密码"
+
+const client = new RestClient({
+  apiKey: API_KEY,
+  apiSecret: API_SECRET,
+  apiPass: API_PASS,
+});
+
+async function main() {
+  const args = {
+    instId: "TRX-USDT-SWAP",
+  }
+  // 获取资金费率
+  const info = await client.getFundingRateHistory(args)
+  console.log(JSON.stringify(info));
+}
+
+main()
+
+```
+
+
+```js
+// 实例二
+import { RestClient, OrderRequest, WebsocketClient } from 'okx-api-new';
+const API_KEY = "生成的key"
+const API_SECRET = "生成的密钥"
+const API_PASS = "密码"
+
+const client = new RestClient({
+  apiKey: API_KEY,
+  apiSecret: API_SECRET,
+  apiPass: API_PASS,
+});
+/*
+ * 如果需要测试的相关配置，看WebsocketClient可选项
+ * 1. 收到打开ws, 会先执行new WebsocketClient() 打印一段信息
+ * 2. 第二步 wsClient.on('open',
+ * 3. 第三步 wsClient.on('response',
+ * 4. 第四步 wsClient.on('update'
+ * 
+ *
+ */
+const wsClient = new WebsocketClient();
+
+wsClient.on('update', (data) => {
+  console.log(new Date(), " 接受到的消息: ", JSON.stringify(data));
+});
+wsClient.on('open', (data) => {
+  console.log('ws connection opened open:', data.wsKey);
+});
+
+wsClient.on('response', (data) => {
+  console.log('ws response received: ', JSON.stringify(data, null, 2));
+});
+// 尝试自动重连接
+wsClient.on('reconnect', ({ wsKey }) => {
+  console.log('ws automatically reconnecting.... ', wsKey);
+});
+// 自动重连成功
+wsClient.on('reconnected', (data) => {
+  console.log('ws has reconnected ', data?.wsKey);
+});
+// 报错
+wsClient.on('error', (data) => {
+  console.error('ws exception: ', data);
+});
+
+
+// ====>>> 订阅 资金费率
+wsClient.subscribe({
+  channel: "funding-rate",
+  instId: "BTC-USDT-SWAP"
+});
+```
 
 
 
@@ -64,6 +150,10 @@ npm install okx-api-new
 HTTP 200 and "code" in the response body === "0"
 ```
 如果返回非正常，请看[APIResponse<T>](./src/types/rest/shared.ts).
+
+
+
+
 
 
 ## Websocket Client
