@@ -1,6 +1,6 @@
 # Node.js & Typescript OKX (OKEX) API SDK
 
-[1]: https://www.npmjs.com/package/okx-api-new
+> 原仓库：https://github.com/tiagosiebler/okx-api
 
 
 Node.js连接器，用于OKX APIs和WebSockets：
