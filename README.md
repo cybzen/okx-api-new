@@ -93,7 +93,23 @@ const client = new RestClient({
  * 
  *
  */
-const wsClient = new WebsocketClient();
+
+// 私有频道
+// const wsClient = new WebsocketClient(
+//   {
+//     accounts: [
+//       {
+//         apiKey: API_KEY,
+//         apiSecret: API_SECRET,
+//         apiPass: API_PASS,
+//       },
+//     ],
+//   },
+// );
+
+// 共有频道
+const wsClient = new WebsocketClient({});
+
 
 wsClient.on('update', (data) => {
   console.log(new Date(), " 接受到的消息: ", JSON.stringify(data));
