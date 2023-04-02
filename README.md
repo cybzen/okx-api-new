@@ -1,4 +1,4 @@
-# Node.js & Typescript OKX (OKEX) API SDK
+# Node.js & Typescript OKX (OKEX) API & WebSocket SDK
 
 > 原仓库：https://github.com/tiagosiebler/okx-api
 
@@ -179,7 +179,7 @@ HTTP 200 and "code" in the response body === "0"
 - If your IDE doesn't have IntelliSense, check the [websocket-client.ts](./src/websocket-client.ts) for a list of methods, params & return types.
 - When subscribing to channels, only the "args" should be passed as an object or array when calling the websocket client subcribe() function: [API docs](https://www.okx.com/docs-v5/en/#websocket-api-subscribe).
 - TypeScript recommended (but it is not required) for a richer experience:
-![typescript-subscribe](./docs/images/subscribe-with-typescript.gif)
+  ![typescript-subscribe](./docs/images/subscribe-with-typescript.gif)
 - The ws client will automatically open connections as needed when subscribing to a channel.
 - If the connection is lost for any reason, the ws client will detect this (via the connection heartbeats). It will then:
   - Automatically teardown the dead connection.
@@ -200,17 +200,21 @@ HTTP 200 and "code" in the response body === "0"
     - And execute with node: `node examples/ws-private.js`
 
 ### Public Events
+
 See [examples/ws-public.ts](./examples/ws-public.ts) for a full example:
 
 ![typescript-events-public](./docs/images/subscribe-events-public.gif)
 
 ### Private Events
+
 See [examples/ws-private.ts](./examples/ws-private.ts) for a full example:
 
 ![typescript-events](./docs/images/subscribe-events.gif)
 
 ## Browser Usage
+
 Build a bundle using webpack:
+
 - `npm install`
 - `npm build`
 - `npm pack`
