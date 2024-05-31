@@ -1,16 +1,21 @@
-import { InstrumentType } from '../shared';
+import {
+  InstrumentType,
+  MarginMode,
+  PositionSide,
+  WithdrawState,
+} from '../shared';
 
 export interface SetLeverageRequest {
   instId?: string;
   ccy?: string;
   lever: string;
-  mgnMode: 'isolated' | 'cross';
+  mgnMode: MarginMode;
   posSide?: 'long' | 'short';
 }
 
 export interface ChangePositionMarginRequest {
   instId: string;
-  posSide: 'long' | 'short' | 'net';
+  posSide: PositionSide;
   type: 'add' | 'reduce';
   amt: string;
   ccy?: string;
@@ -30,6 +35,18 @@ export interface GetHistoricPositionParams {
   mgnMode?: string;
   type?: string;
   posId?: string;
+  after?: string;
+  before?: string;
+  limit?: string;
+}
+
+export interface WithdrawalHistoryRequest {
+  ccy?: string;
+  wdId?: string;
+  clientId?: string;
+  txId?: string;
+  type?: '3' | '4';
+  state?: WithdrawState;
   after?: string;
   before?: string;
   limit?: string;

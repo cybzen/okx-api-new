@@ -1,3 +1,5 @@
+import { MarginMode, PositionSide, WithdrawState } from '../shared';
+
 export interface AccountBalance {
   adjEq: string;
   details: AccountBalanceDetail[];
@@ -59,7 +61,7 @@ export interface AccountPosition {
   liqPx: string;
   markPx: string;
   margin: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   mgnRatio: string;
   mmr: string;
   notionalUsd: string;
@@ -68,7 +70,7 @@ export interface AccountPosition {
   pos: string;
   posCcy: string;
   posId: string;
-  posSide: string;
+  posSide: PositionSide;
   thetaBS: string;
   thetaPA: string;
   tradeId: string;
@@ -87,13 +89,13 @@ export interface HistoricAccountPosition {
   instId: string;
   instType: string;
   lever: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   openAvgPx: string;
   openMaxPos: string;
   pnl: string;
   pnlRatio: string;
   posId: string;
-  posSide: string;
+  posSide: PositionSide;
   triggerPx: string;
   type: string;
   uTime: string;
@@ -111,13 +113,13 @@ export interface AccountPositionRiskData {
   ccy: string;
   instId: string;
   instType: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   notionalCcy: string;
   notionalUsd: string;
   pos: string;
   posCcy: string;
   posId: string;
-  posSide: string;
+  posSide: PositionSide;
   quoteBal: string;
 }
 
@@ -138,7 +140,7 @@ export interface AccountBill {
   from: string;
   instId: string;
   instType: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   notes: string;
   ordId: string;
   pnl: string;
@@ -160,7 +162,18 @@ export interface AccountConfiguration {
   levelTmp: string;
   mgnIsoMode: string;
   posMode: string;
+  spotOffsetType: string;
   uid: string;
+  label: string;
+  roleType: string;
+  traderInsts: any[];
+  spotRoleType: string;
+  spotTraderInsts: any[];
+  opAuth: string;
+  kycLv: string;
+  ip: string;
+  perm: string;
+  mainUid: string;
 }
 
 export interface AccountPositionModeResult {
@@ -169,9 +182,9 @@ export interface AccountPositionModeResult {
 
 export interface AccountLeverageResult {
   lever: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   instId: string;
-  posSide: string;
+  posSide: PositionSide;
 }
 
 export interface AccountMaxOrderAmount {
@@ -192,20 +205,20 @@ export interface AccountChangeMarginResult {
   ccy: string;
   instId: string;
   leverage: string;
-  posSide: string;
+  posSide: PositionSide;
   type: string;
 }
 
 export interface AccountLeverage {
   instId: string;
-  mgnMode: string;
-  posSide: string;
+  mgnMode: MarginMode;
+  posSide: PositionSide;
   lever: string;
 }
 
 export interface AccountMaxLoan {
   instId: string;
-  mgnMode: string;
+  mgnMode: MarginMode;
   mgnCcy: string;
   maxLoan: string;
   ccy: string;
@@ -227,4 +240,74 @@ export interface AccountFeeRate {
 
 export interface AccountIsolatedMode {
   isoMode: 'autonomy' | 'automatic';
+}
+
+export interface AdjustLeverageInfo {
+  estAvailQuoteTrans: string;
+  estAvailTrans: string;
+  estLiqPx: string;
+  estMgn: string;
+  estQuoteMgn: string;
+  estMaxAmt: string;
+  estQuoteMaxAmt: string;
+  existOrd: boolean;
+  maxLever: string;
+  minLever: string;
+}
+
+export interface InterestAccrued {
+  type: '1' | '2';
+  ccy: string;
+  instId: string;
+  mgnMode: MarginMode;
+  interest: string;
+  interestRate: string;
+  liab: string;
+  ts: string;
+}
+
+export interface InterestRate {
+  interestRate: string;
+  ccy: string;
+}
+
+export interface Greeks {
+  greeksType: string;
+}
+
+export interface MaxWithdrawal {
+  ccy: string;
+  maxWd: string;
+  maxWdEx: string;
+  spotOffsetMaxWd: string;
+  spotOffsetMaxWdEx: string;
+}
+
+export interface AccountRiskState {
+  atRisk: string;
+  atRiskIdx: string;
+  atRiskMgn: string;
+  ts: string;
+}
+
+export interface WithdrawalHistory {
+  ccy: string;
+  chain: string;
+  nonTradableAsset: boolean;
+  amt: string;
+  ts: string;
+  from: string;
+  areaCodeFrom: string;
+  to: string;
+  areaCodeTo: string;
+  tag: string;
+  pmtId: string;
+  memo: string;
+  addrExt: any;
+  txId: string;
+  fee: string;
+  feeCcy: string;
+  state: WithdrawState;
+  wdId: string;
+  clientId: string;
 }

@@ -2,6 +2,7 @@
 
 > 原仓库：https://github.com/tiagosiebler/okx-api
 
+[![okx okex SDK for nodejs rest & websockets api](https://github.com/tiagosiebler/okx-api/blob/master/docs/images/logo2.png?raw=true)][1]
 
 Node.js连接器，用于OKX APIs和WebSockets：
 1. 与所有OKX APIs的完全集成。
@@ -23,6 +24,17 @@ npm install okx-api-new
 大多数方法接受JS对象。这些可以使用okx的API文档中指定的参数进行填充，或者检查rest-client类方法中的类型定义。
 - [RestClient](src/rest-client.ts).
 - [OKX API Documentation](https://www.okx.com/docs-v5/en/#rest-api).
+- [TSDoc Documentation (generated using typedoc via npm module)](https://tsdocs.dev/docs/okx-api)
+
+## Contributions & Thanks
+
+Support my efforts to make algo trading accessible to all - register with my referral links:
+
+- [Bybit](https://www.bybit.com/en-US/register?affiliate_id=9410&language=en-US&group_id=0&group_type=1)
+- [Binance](https://www.binance.com/en/register?ref=20983262)
+- [OKX](https://www.okx.com/join/18504944)
+
+For more ways to give thanks & support my efforts, visit [Contributions & Thanks](https://github.com/tiagosiebler/awesome-crypto-examples/wiki/Contributions-&-Thanks)!
 
 ## 项目结构
 该项目使用TypeScript，资源存储在三个关键结构中。
@@ -211,7 +223,37 @@ See [examples/ws-private.ts](./examples/ws-private.ts) for a full example:
 
 ![typescript-events](./docs/images/subscribe-events.gif)
 
-## Browser Usage
+## Browser/Frontend Usage
+
+### Import
+
+This is the "modern" way, allowing the package to be directly imported into frontend projects with full typescript support.
+
+1. Install these dependencies
+   ```sh
+   npm install crypto-browserify stream-browserify
+   ```
+2. Add this to your `tsconfig.json`
+   ```json
+   {
+     "compilerOptions": {
+       "paths": {
+         "crypto": [
+           "./node_modules/crypto-browserify"
+         ],
+         "stream": [
+           "./node_modules/stream-browserify"
+         ]
+   }
+   ```
+3. Declare this in the global context of your application (ex: in polyfills for angular)
+   ```js
+   (window as any).global = window;
+   ```
+
+### Webpack
+
+This is the "old" way of using this package on webpages. This will build a minified js bundle that can be pulled in using a script tag on a website.
 
 Build a bundle using webpack:
 
@@ -222,3 +264,7 @@ Build a bundle using webpack:
 The bundle can be found in `dist/`. Altough usage should be largely consistent, smaller differences will exist. Documentation is still TODO.
 
 ---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tiagosiebler/bitget-api,tiagosiebler/bybit-api,tiagosiebler/binance,tiagosiebler/orderbooks,tiagosiebler/okx-api,tiagosiebler/awesome-crypto-examples&type=Date)](https://star-history.com/#tiagosiebler/bybit-api&tiagosiebler/binance&tiagosiebler/orderbooks&tiagosiebler/okx-api&tiagosiebler/bitget-api&tiagosiebler/awesome-crypto-examples&tiagosiebler/ftx-api&Date)

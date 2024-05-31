@@ -1,4 +1,12 @@
-import { numberInString } from '../shared';
+import {
+  AlgoOrderState,
+  AlgoOrderType,
+  AlgoPositionSide,
+  OrderState,
+  OrderType,
+  PositionSide,
+  numberInString,
+} from '../shared';
 
 export interface OrderResult {
   clOrdId: string;
@@ -24,7 +32,7 @@ export interface AmendedOrder {
 }
 export interface ClosedPositions {
   instId: string;
-  posSide: string;
+  posSide: PositionSide;
 }
 
 export interface OrderDetails {
@@ -37,16 +45,16 @@ export interface OrderDetails {
   px: string;
   sz: string;
   pnl: string;
-  ordType: string;
+  ordType: OrderType;
   side: string;
-  posSide: string;
+  posSide: PositionSide;
   tdMode: string;
   accFillSz: string;
   fillPx: string;
   tradeId: string;
   fillSz: string;
   fillTime: string;
-  state: string;
+  state: OrderState;
   avgPx: string;
   lever: string;
   tpTriggerPx: string;
@@ -81,17 +89,24 @@ export interface OrderListItem {
   instType: string;
   lever: string;
   ordId: string;
-  ordType: string;
+  ordType: OrderType;
   pnl: string;
-  posSide: string;
+  posSide: PositionSide;
   px: string;
+  pxUsd: string;
+  pxVol: string;
+  pxType: string;
   rebate: string;
   rebateCcy: string;
   side: string;
+  attachAlgoClOrdId: string;
   slOrdPx: string;
   slTriggerPx: string;
   slTriggerPxType: string;
-  state: string;
+  attachAlgoOrds: any[];
+  state: OrderState;
+  stpId: string;
+  stpMode: string;
   sz: string;
   tag: string;
   tgtCcy: string;
@@ -101,6 +116,10 @@ export interface OrderListItem {
   tpTriggerPx: string;
   tpTriggerPxType: string;
   tradeId: string;
+  reduceOnly: string;
+  quickMgnType: string;
+  algoClOrdId: string;
+  algoId: string;
   uTime: string;
 }
 
@@ -112,25 +131,32 @@ export interface HistoricOrder {
   clOrdId: string;
   tag: string;
   px: string;
+  pxUsd: string;
+  pxVol: string;
+  pxType: string;
   sz: string;
-  ordType: string;
+  ordType: OrderType;
   side: string;
-  posSide: string;
+  posSide: PositionSide;
   tdMode: string;
   accFillSz: string;
   fillPx: string;
   tradeId: string;
   fillSz: string;
   fillTime: string;
-  state: string;
+  state: OrderState;
   avgPx: string;
   lever: string;
+  attachAlgoClOrdId: string;
   tpTriggerPx: string;
   tpTriggerPxType: string;
   tpOrdPx: string;
   slTriggerPx: string;
   slTriggerPxType: string;
   slOrdPx: string;
+  attachAlgoOrds: any[];
+  stpId: string;
+  stpMode: string;
   feeCcy: string;
   fee: string;
   rebateCcy: string;
@@ -139,6 +165,11 @@ export interface HistoricOrder {
   tgtCcy: string;
   pnl: string;
   category: string;
+  reduceOnly: string;
+  cancelSource: string;
+  cancelSourceReason: string;
+  algoClOrdId: string;
+  algoId: string;
   uTime: string;
   cTime: string;
 }
@@ -154,7 +185,7 @@ export interface OrderFill {
   fillPx: string;
   fillSz: string;
   side: string;
-  posSide: string;
+  posSide: PositionSide;
   execType: string;
   feeCcy: string;
   fee: string;
@@ -163,23 +194,32 @@ export interface OrderFill {
 
 export interface AlgoOrderResult {
   algoId: string;
+  algoClOrdId: string;
   sCode: string;
   sMsg: string;
 }
 
-export interface AlgoOrderListItem {
+export interface AmendAlgoOrderResult extends AlgoOrderResult {
+  reqId: string;
+}
+
+export interface AlgoOrderDetailsResult {
   instType: string;
   instId: string;
   ordId: string;
+  ordIdList: string[];
   ccy: string;
+  clOrdId: string;
   algoId: string;
+  attachAlgoOrds: any[];
   sz: string;
-  ordType: string;
+  closeFraction: string;
+  ordType: AlgoOrderType;
   side: string;
-  posSide: string;
+  posSide: AlgoPositionSide;
   tdMode: string;
   tgtCcy: string;
-  state: string;
+  state: AlgoOrderState;
   lever: string;
   tpTriggerPx: string;
   tpTriggerPxType: string;
@@ -197,49 +237,118 @@ export interface AlgoOrderListItem {
   pxSpread: string;
   pxLimit: string;
   szLimit: string;
+  tag: string;
   timeInterval: string;
-  triggerTime: string;
   callbackRatio: string;
   callbackSpread: string;
   activePx: string;
   moveTriggerPx: string;
+  reduceOnly: string;
+  triggerTime: string;
+  quickMgnType: string;
+  last: string;
+  failCode: string;
+  algoClOrdId: string;
+  amendPxOnTriggerType: string;
   cTime: string;
 }
 
-export interface HistoricAlgoOrder {
-  instType: string;
-  instId: string;
-  ordId: string;
-  ccy: string;
-  algoId: string;
-  sz: string;
-  ordType: string;
-  side: string;
-  posSide: string;
-  tdMode: string;
-  tgtCcy: string;
-  state: string;
-  lever: string;
-  tpTriggerPx: string;
-  tpTriggerPxType: string;
-  tpOrdPx: string;
-  slTriggerPx: string;
-  slTriggerPxType: string;
-  triggerPx: string;
-  triggerPxType: string;
-  ordPx: string;
-  actualSz: string;
+export interface AlgoOrderListItem {
+  activePx: string;
   actualPx: string;
   actualSide: string;
-  pxVar: string;
-  pxSpread: string;
-  pxLimit: string;
-  szLimit: string;
-  timeInterval: string;
+  actualSz: string;
+  algoId: string;
+  attachAlgoOrds: any[];
+  cTime: string;
   callbackRatio: string;
   callbackSpread: string;
-  activePx: string;
+  ccy: string;
+  clOrdId: string;
+  instId: string;
+  instType: string;
+  lever: string;
   moveTriggerPx: string;
+  ordId: string;
+  ordIdList: any[];
+  ordPx: string;
+  ordType: AlgoOrderType;
+  posSide: AlgoPositionSide;
+  pxLimit: string;
+  pxSpread: string;
+  pxVar: string;
+  side: string;
+  slOrdPx: string;
+  slTriggerPx: string;
+  slTriggerPxType: string;
+  state: AlgoOrderState;
+  sz: string;
+  closeFraction: string;
+  szLimit: string;
+  tag: string;
+  tdMode: string;
+  tgtCcy: string;
+  timeInterval: string;
+  tpOrdPx: string;
+  tpTriggerPx: string;
+  tpTriggerPxType: string;
+  triggerPx: string;
+  reduceOnly: string;
+  triggerPxType: string;
+  quickMgnType: string;
+  last: string;
+  failCode: string;
+  algoClOrdId: string;
   triggerTime: string;
+  amendPxOnTriggerType: string;
+}
+
+export interface HistoricAlgoOrder {
+  activePx: string;
+  actualPx: string;
+  actualSide: string;
+  actualSz: string;
+  algoClOrdId: string;
+  algoId: string;
+  attachAlgoOrds: any[];
   cTime: string;
+  callbackRatio: string;
+  callbackSpread: string;
+  ccy: string;
+  clOrdId: string;
+  closeFraction: string;
+  failCode: string;
+  instId: string;
+  instType: string;
+  last: string;
+  lever: string;
+  moveTriggerPx: string;
+  ordId: string;
+  ordIdList: string[];
+  ordPx: string;
+  ordType: AlgoOrderType;
+  posSide: AlgoPositionSide;
+  pxLimit: string;
+  pxSpread: string;
+  pxVar: string;
+  quickMgnType: string;
+  reduceOnly: string;
+  side: string;
+  slOrdPx: string;
+  slTriggerPx: string;
+  slTriggerPxType: string;
+  state: AlgoOrderState;
+  sz: string;
+  szLimit: string;
+  tag: string;
+  tdMode: string;
+  tgtCcy: string;
+  timeInterval: string;
+  tpOrdPx: string;
+  tpTriggerPx: string;
+  tpTriggerPxType: string;
+  triggerPx: string;
+  triggerPxType: string;
+  triggerTime: string;
+  amendPxOnTriggerType: string;
 }

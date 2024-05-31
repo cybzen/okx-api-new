@@ -8,13 +8,14 @@ import {
   OrderType,
   MarginMode,
   InstrumentType,
-  AlgoState,
+  AlgoOrderState,
+  AlgoPositionSide
 } from '../shared';
 
 export interface AlgoRecentHistoryRequest {
   ordType: AlgoOrderType;
   algoId?: string;
-  instType?: string;
+  instType?: InstrumentType;
   instId?: string;
   after?: string;
   before?: string;
@@ -23,9 +24,9 @@ export interface AlgoRecentHistoryRequest {
 
 export interface AlgoLongHistoryRequest {
   ordType: AlgoOrderType;
-  state?: AlgoState;
+  state?: AlgoOrderState;
   algoId?: string;
-  instType?: string;
+  instType?: InstrumentType;
   instId?: string;
   after?: string;
   before?: string;
@@ -37,8 +38,9 @@ export interface AlgoOrderRequest {
   tdMode: TradeMode;
   ccy?: string;
   side: OrderSide;
-  posSide?: PositionSide;
+  posSide?: AlgoPositionSide;
   ordType: AlgoOrderType;
+  algoClOrdId?: string;
   sz: numberInString;
   tag?: string;
   reduceOnly?: boolean;
@@ -78,6 +80,27 @@ export interface AmendOrderRequest {
   newPx?: string;
 }
 
+export type AlgoOrderDetailsRequest = {
+  algoId: string;
+} | {
+  algoClOrdId: string;
+}
+
+export interface AmendAlgoOrderRequest {
+  instId: string;
+  algoId?: string;
+  algoClOrdId?: string;
+  cxlOnFail?: boolean;
+  reqId?: string;
+  newSz?: string;
+  newTpTriggerPx?: string;
+  newTpOrdPx?: string;
+  newSlTriggerPx?: string;
+  newSlOrdPx?: string;
+  newTpTriggerPxType?: 'last' | 'index' | 'mark';
+  newSlTriggerPxType?: 'last' | 'index' | 'mark';
+}
+
 export interface CancelAlgoOrderRequest {
   algoId: string;
   instId: string;
@@ -89,6 +112,8 @@ export interface ClosePositionRequest {
   mgnMode: MarginMode;
   ccy?: string;
   autoCxl?: boolean;
+  clOrdId?: string;
+  tag?: string;
 }
 
 export interface FillsHistoryRequest {
@@ -137,4 +162,13 @@ export interface OrderRequest {
   /** A spot buy on BTC-USDT with "base_ccy" would mean the QTY (sz) is in USDT */
   tgtCcy?: 'base_ccy' | 'quote_ccy';
   banAmend?: boolean;
+  /** Take Profit & Stop Loss params */
+  tpTriggerPx?: string;
+  tpOrdPx?: string;
+  slTriggerPx?: string;
+  slOrdPx?: string;
+  tpTriggerPxType?: PriceTriggerType;
+  slTriggerPxType?: PriceTriggerType;
+  /** Quick margin type */
+  quickMgnType?: 'manual' | 'auto_borrow' | 'auto_repay';
 }

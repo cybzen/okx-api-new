@@ -14,7 +14,16 @@ export type AlgoOrderType =
   | 'iceberg'
   | 'twap';
 
-export type AlgoState = 'effective' | 'canceled' | 'order_failed';
+export type AlgoOrderState =
+  | 'live'
+  | 'pause'
+  | 'partially_effective'
+  | 'effective'
+  | 'canceled'
+  | 'order_failed'
+  | 'partially_failed';
+
+export type AlgoPositionSide = 'long' | 'short';
 
 export type ContractGridDirection = 'long' | 'short' | 'neutral';
 
@@ -33,6 +42,13 @@ export type OrderType =
   | 'fok'
   | 'ioc'
   | 'optimal_limit_ioc';
+
+export type OrderState =
+  | 'canceled'
+  | 'live'
+  | 'partially_filled'
+  | 'filled'
+  | 'mmp_canceled';
 
 export type PositionSide = 'net' | 'long' | 'short';
 
@@ -66,3 +82,20 @@ export interface Pagination {
   before?: string;
   limit?: string;
 }
+
+export type PosMode = 'long_short_mode' | 'net_mode';
+
+export type WithdrawState =
+  | '-3'
+  | '-2'
+  | '-1'
+  | '0'
+  | '1'
+  | '2'
+  | '4'
+  | '5'
+  | '6'
+  | '8'
+  | '9'
+  | '10'
+  | '12';

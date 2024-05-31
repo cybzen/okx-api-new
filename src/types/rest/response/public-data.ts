@@ -48,6 +48,8 @@ type lowPrice = string;
 type closePrice = string;
 type vol = string;
 type volCcy = string;
+type volCcyQuote = string;
+type confirm = string;
 
 export type Candle = [
   timestamp,
@@ -56,7 +58,9 @@ export type Candle = [
   lowPrice,
   closePrice,
   vol,
-  volCcy
+  volCcy,
+  volCcyQuote,
+  confirm
 ];
 
 export type CandleNoVolume = [
@@ -73,5 +77,75 @@ export interface Trade {
   sz: string;
   px: string;
   tradeId: string;
+  ts: string;
+}
+
+export interface Instrument {
+  instType: InstrumentType;
+  instId: string;
+  uly: string;
+  instFamily: string;
+  category: string;
+  baseCcy: string;
+  quoteCcy: string;
+  settCcy: string;
+  ctVal: string;
+  ctMult: string;
+  ctValCcy: string;
+  optType: string;
+  stk: string;
+  listTime: string;
+  expTime: string;
+  lever: string;
+  tickSz: string;
+  lotSz: string;
+  minSz: string;
+  ctType: string;
+  alias: string;
+  state: string;
+  maxLmtSz: string;
+  maxMktSz: string;
+  maxTwapSz: string;
+  maxIcebergSz: string;
+  maxTriggerSz: string;
+  maxStopSz: string;
+}
+
+export interface EconomicCalendarData {
+  calendarId: string;
+  date: string;
+  region: string;
+  category: string;
+  event: string;
+  refDate: string;
+  actual: string;
+  previous: string;
+  forecast: string;
+  dateSpan: string;
+  importance: string;
+  uTime: string;
+  prevInitial: string;
+  ccy: string;
+  unit: string;
+}
+
+export interface UnitConvertData {
+  type: '1' | '2';
+  instId: string;
+  px: string;
+  sz: string;
+  unit: 'coin' | 'usds';
+}
+
+export interface FundingRateHistory {
+  instType: string;
+  instId: string;
+  fundingRate: string;
+  realizedRate: string;
+  fundingTime: string;
+  method: string;
+}
+
+export interface SystemTime {
   ts: string;
 }
